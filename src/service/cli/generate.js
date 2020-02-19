@@ -1,26 +1,10 @@
 'use strict';
 
+const fs = require(`fs`);
 const {
   getRandomInt,
   shuffle,
 } = require(`../../utils`);
-
-module.exports = {
-  name: `--generate`,
-  run(args) {
-    const [count] = args;
-    const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
-    const content = JSON.stringify(generateOffers(countOffer));
-  }
-}
-
-'use strict';
-
-module.exports = {
-  name: `--generate`,
-  run() {
-  }
-}
 
 const DEFAULT_COUNT = 1;
 const FILE_NAME = `mocks.json`;
@@ -66,6 +50,13 @@ const SumRestrict = {
   max: 100000,
 };
 
+const PictureRestrict = {
+  min: 1,
+  max: 16,
+};
+
+const getPictureFileName = (number) => number > 10 ? `item${number}.jpg` : `item0${number}.jpg`;
+
 const generateOffers = (count) => (
   Array(count).fill({}).map(() => ({
     category: [CATEGORIES[getRandomInt(0, CATEGORIES.length - 1)]],
@@ -76,3 +67,21 @@ const generateOffers = (count) => (
     sum: getRandomInt(SumRestrict.min, SumRestrict.max),
   }))
 );
+
+module.exports = {
+  name: `--generate`,
+  run(args) {
+    const [count] = args;
+    const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
+    const content = JSON.stringify(generateOffers(countOffer));
+
+    fs.writeFile(FILE_NAME, content, (err) => {
+      if (err) {
+        return console.error(`Can't write data to file...`);
+      }
+
+      return console.info(`Operation success. File created.`);
+    });
+  }
+};
+
