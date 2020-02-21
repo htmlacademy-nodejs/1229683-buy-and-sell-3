@@ -5,6 +5,7 @@ const {
   getRandomInt,
   shuffle,
 } = require(`../../utils`);
+const {ExitCode} = require(`../../constants`);
 
 const DEFAULT_COUNT = 1;
 const FILE_NAME = `mocks.json`;
@@ -74,6 +75,11 @@ module.exports = {
     const [count] = args;
     const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
     const content = JSON.stringify(generateOffers(countOffer));
+
+    if (count > 1000) {
+      console.info(`Не больше 1000 объявлений`);
+      process.exit(ExitCode.error);
+    }
 
     fs.writeFile(FILE_NAME, content, (err) => {
       if (err) {
