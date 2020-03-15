@@ -5,7 +5,7 @@ const {
   getRandomInt,
   shuffle,
 } = require(`../../utils`);
-const {ExitCode} = require(`../../constants`);
+const {ExitCode, MAX_MESSAGE_COUNT} = require(`../../constants`);
 
 const DEFAULT_COUNT = 1;
 const FILE_NAME = `mocks.json`;
@@ -56,7 +56,7 @@ const PictureRestrict = {
   max: 16,
 };
 
-const getPictureFileName = (number) => number > 10 ? `item${number}.jpg` : `item0${number}.jpg`;
+const getPictureFileName = (number) => number > 9 ? `item${number}.jpg` : `item0${number}.jpg`;
 
 const generateOffers = (count) => (
   Array(count).fill({}).map(() => ({
@@ -76,8 +76,8 @@ module.exports = {
     const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
     const content = JSON.stringify(generateOffers(countOffer));
 
-    if (count > 1000) {
-      console.info(`Не больше 1000 объявлений`);
+    if (count > MAX_MESSAGE_COUNT) {
+      console.info(`Не больше ${MAX_MESSAGE_COUNT} объявлений`);
       process.exit(ExitCode.error);
     }
 
