@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 class SearchService {
   constructor(offers) {
@@ -6,7 +6,7 @@ class SearchService {
   }
 
   findAll(searchText) {
-    return this._offers.filter((offer) => offer.ftitle.include(searchText));
+    return this._offers.filter((offer) => offer.title.include(searchText));
   }
 }
 

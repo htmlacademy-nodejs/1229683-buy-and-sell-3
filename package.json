@@ -8,6 +8,7 @@
     "start-front-server": "nodemon ./src/express/index.js",
     "server": "nodemon ./src/service/service.js --server",
     "test": "npm run eslint",
+    "test::rest": "jest --detectOpenHandles",
     "eslint": "eslint --ext .js src/"
   },
   "repository": {
@@ -23,8 +24,11 @@
   "devDependencies": {
     "eslint": "6.8.0",
     "eslint-config-htmlacademy": "0.5.2",
+    "jest": "26.0.1",
     "nodemon": "2.0.2",
-    "pug-lint": "2.6.0"
+    "pug-lint": "2.6.0",
+    "supertest": "4.0.2",
+    "weak-napi": "2.0.2"
   },
   "dependencies": {
     "chalk": "3.0.0",

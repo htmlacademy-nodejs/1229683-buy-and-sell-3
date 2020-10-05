@@ -12,17 +12,23 @@ const {
   SearchService,
 } = require(`../data-service`);
 
-const {getMockData} = require(`../lib/get-mock-data`);
+const getMockData = require(`../lib/get-mock-data`);
 
 
 const app = new Router();
 
 (async () => {
   const mockData = await getMockData();
-
-  categories(app, new CategoryService(mockData));
-  offer(app, new OfferService(mockData), new CommentService());
   search(app, new SearchService(mockData));
+
+})();
+
+categories(app, new CategoryService());
+
+
+(async () => {
+    const mockData = await getMockData();
+    offer(app, new OfferService(mockData), new CommentService());
 })();
 
 module.exports = app;
